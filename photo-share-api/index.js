@@ -1,9 +1,10 @@
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
-const expressPlayground = require("graphql-playground-middleware-express");
+const expressPlayground = require("graphql-playground-middleware-express")
+  .default;
 const { readFileSync } = require("fs");
 
-const typeDefs = readFileSync("./typedefs.graphql", "UTF-8");
+const typeDefs = readFileSync("./typeDefs.graphql", "UTF-8");
 const resolvers = require("./resolvers");
 
 const app = express();

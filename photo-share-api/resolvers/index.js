@@ -1,3 +1,4 @@
+const { GraphQLScalarType } = require("graphql");
 let id = 0;
 var users = [
   { githubLogin: "mHattrup", name: "Mike Hattrup" },
@@ -41,7 +42,9 @@ var tags = [
 const resolvers = {
   Query: {
     totalPhotos: () => photos.length,
-    allPhotos: () => photos
+    allPhotos: (parent, args) => {
+      return photos;
+    }
   },
   Mutation: {
     postPhoto: (_parent, args) => {
