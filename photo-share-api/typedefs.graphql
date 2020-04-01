@@ -8,6 +8,11 @@ enum PhotoCategory {
   GRAPHIC
 }
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type User {
   githubLogin: ID!
   name: String
@@ -34,10 +39,15 @@ input PostPhotoInput {
 }
 
 type Query {
+  me: User
   totalPhotos: Int!
   allPhotos(after: DateTime): [Photo]!
+  totalUsers: Int!
+  allUsers: [User!]!
 }
 
 type Mutation {
+  addFakeUsers(count: Int = 1): [User!]!
   postPhoto(input: PostPhotoInput!): Photo!
+  githubAuth(code: String!): AuthPayload!
 }
