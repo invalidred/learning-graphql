@@ -25,12 +25,25 @@ const Users = () =>
         }
     </Query>
 
+const updateUserCache = (cache, { data: { addFakeUsers } }) => {
+    let data = cache.readQuery({ query: ROOT_QUERY })
+    const updated = {
+        ...data,
+        totalUsers: data.totalUsers + addFakeUsers.length,
+        allUsers: [
+            ...data.allUsers,
+            ...addFakeUsers
+        ]
+    }
+    cache.writeQuery({ query: ROOT_QUERY, data: updated })
+}
+
 const UserList = ({ count, users, refetchUsers }) =>
     <div>
         <p>{count} Users</p>
         <button onClick={() => refetchUsers()}>Refetch</button>
         <Mutation
-            refetchQueries={[{ query: ROOT_QUERY }]}
+            update={updateUserCache}
             mutation={ADD_FAKE_USERS_MUTATION}
             variables={{ count: 1 }}
         >
